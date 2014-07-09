@@ -2460,10 +2460,6 @@ if __name__ == "__main__":
 		import cPickle as pickle
 		exec("def do_exec(co, loc): exec co in loc\n")
 		sources = pickle.loads(zlib.decompress(base64.decodestring(sources)))
-	for n, v in sources.items():
-		print("####", n)
-		print(v)
-	exit(0)
 
 	importer = DictImporter(sources)
 	sys.meta_path.append(importer)
