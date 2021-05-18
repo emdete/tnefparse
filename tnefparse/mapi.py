@@ -48,9 +48,9 @@ class TNEFMAPI_Object(object):
 				logger.debug("Attribute name: 0x%04x", attr_name)
 				guid = ''
 				if attr_guid_exists:
-					guid = '%32.32x' % bytes_to_int(data[offset:offset+16]); offset += 16
+					guid = '%032x' % bytes_to_int(data[offset:offset+16]); offset += 16
 					kind = bytes_to_int(data[offset:offset+4]); offset += 4
-					logger.debug("Kind: %8.8x", kind)
+					logger.debug("Kind: %08x", kind)
 					if kind == 0:
 						# Skip the iid
 						offset += 4
@@ -73,9 +73,9 @@ class TNEFMAPI_Object(object):
 					attr_data = data[offset:offset+16]; offset += 16
 				elif attr_type in (SZMAPI_STRING, SZMAPI_UNICODE_STRING, SZMAPI_OBJECT, SZMAPI_BINARY, SZMAPI_UNSPECIFIED):
 					num_vals = bytes_to_int(data[offset:offset+4]); offset += 4
-					logger.debug("Number of values: %d", num_vals)
+					logger.info("Number of values: %d", num_vals)
 					attr_data = []
-					for j in range(num_vals):
+					for j in xrange(num_vals):
 						if offset + 4 >= dataLen:
 							break
 						# length = bytes_to_int(data[offset:offset+4]); offset += 4
@@ -956,8 +956,8 @@ class TNEFMAPI_Attribute(object):
 		MAPI_CONTROL_ID : "MAPI_CONTROL_ID",
 		MAPI_INITIAL_DETAILS_PANE : "MAPI_INITIAL_DETAILS_PANE",
 		MAPI_ID_SECURE_MIN : "MAPI_ID_SECURE_MIN",
-		MAPI_ID_SECURE_MAX : "MAPI_ID_SECURE_MAX"
-	}
+		MAPI_ID_SECURE_MAX : "MAPI_ID_SECURE_MAX",
+		}
 
 	OutlookGuid = '05133f00aa00da98101b450b6ed8da90'
 	AppointmentGuid = '46000000000000c00000000000062002'
@@ -969,5 +969,6 @@ class TNEFMAPI_Attribute(object):
 		self.guid = guid
 
 	def __str__(self):
-		return "<%s(0x%04x): %s(0x%04x)=%.70s>"% (self.__class__.__name__, self.attr_type, TNEFMAPI_Attribute.codes.get(self.name, "UNKNOWN_%04x"% self.name), self.name, repr(self.data))
+		return "<%s(0x%04x): %s(0x%04x)=%.70s>"% (
+			self.__class__.__name__, self.attr_type, TNEFMAPI_Attribute.codes.get(self.name, "UNKNOWN_%04x"% self.name), self.name, repr(self.data))
 

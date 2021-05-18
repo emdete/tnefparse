@@ -1,4 +1,5 @@
 from .tnef import TNEF, TNEFAttachment, TNEF_Object
+from .mapi import TNEFMAPI_Attribute
 
 def to_zip(data, default_name='no-name', deflate=True):
 	"Convert attachments in TNEF data to zip format. Accepts and returns str type."

@@ -238,7 +238,7 @@ class TNEF:
 					yield a
 				a = obj
 			elif obj.level == TNEF.LVL_ATTACHMENT and a:
-				a.add_attr(obj)
+				pass # a.add_attr(obj) TODO
 	attachments = property(_get_attachments)
 
 	def _get_mapiprops(self):
